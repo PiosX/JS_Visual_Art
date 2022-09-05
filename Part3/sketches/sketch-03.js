@@ -1,6 +1,7 @@
 const canvasSketch = require("canvas-sketch");
 const random = require("canvas-sketch-util/random");
 const math = require("canvas-sketch-util/math");
+const risoColors = require("riso-colors");
 
 const settings = {
 	dimensions: [1080, 1080],
@@ -13,6 +14,9 @@ const settings = {
 // };
 // // animate();
 
+const bgColor = random.pick(risoColors).hex;
+const stroke = random.pick(risoColors).hex;
+
 const sketch = ({ context, width, height }) => {
 	const agents = [];
 
@@ -24,7 +28,8 @@ const sketch = ({ context, width, height }) => {
 	}
 
 	return ({ context, width, height }) => {
-		context.fillStyle = "white";
+		context.fillStyle = bgColor;
+
 		context.fillRect(0, 0, width, height);
 
 		for (let i = 0; i < agents.length; i++) {
@@ -42,6 +47,7 @@ const sketch = ({ context, width, height }) => {
 				context.beginPath();
 				context.moveTo(agent.pos.x, agent.pos.y);
 				context.lineTo(other.pos.x, other.pos.y);
+				context.strokeStyle = stroke;
 				context.stroke();
 			}
 		}
